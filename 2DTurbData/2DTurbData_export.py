@@ -1,5 +1,11 @@
 """
+Author: Lev Kakasenko
+Description:
 Exports the 2D turbulence snapshots from .mat files into a NumPy array.
+
+If you use this code in any form, please cite "Bridging the Gap Between Deterministic and
+Probabilistic Approaches to State Estimation" by Lev Kakasenko,  Alen Alexanderian,
+Mohammad Farazmand, and Arvind Krishna Saibaba (2025)
 """
 
 import scipy.io
