@@ -37,5 +37,5 @@ L. R. Dice, Measures of the amount of ecologic association between species,
 Ecology 26 (3) (1945) 297–302. https://doi.org/10.2307/1932409  
 
 ## License
-If you use the code in this repository in any form, see the [license](https://github.ncsu.edu/lmkakase/state-estimation-bridge/blob/main/LICENSE).  Also, please cite
+If you use the code in this repository in any form, see the [license](https://github.com/LevKakasenko/state-estimation-bridge/blob/main/LICENSE).  Also, please cite
 "Bridging the Gap Between Deterministic and Probabilistic Approaches to State Estimation" by Lev Kakasenko,  Alen Alexanderian, Mohammad Farazmand, and Arvind Krishna Saibaba (2025).
