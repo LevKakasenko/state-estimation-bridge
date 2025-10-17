@@ -82,7 +82,7 @@ U, s, Vh = np.linalg.svd(X_train, full_matrices=True)
 U_r = U[:, :num_modes]
 Sigma = np.diag(s[:num_modes])
 Gamma_prior = (Sigma**2) / (Vh.shape[1] - 1)
-Gamma_prior_sqrt = np.sqrt(Gamma_prior)
+Gamma_prior_sqrt = np.sqrt(Gamma_prior) # ONLY VALID FOR DIAGONAL MATRICES
 Gamma_prior_inv = np.linalg.inv(Gamma_prior)
 
 # generate angles for plotting

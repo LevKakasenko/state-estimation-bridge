@@ -59,10 +59,27 @@ def sensor_select(heur, U, U_r, num_sensors, num_modes, Gamma_prior_sqrt,
         idx = aopt_select(U_r, sigma_noise, Gamma_prior_inv, num_sensors)
     elif heur == 'aopt_greedy':
         idx = greedy_sensor_list[:num_sensors]
+    elif heur == 'random':
+        idx = random_select(num_features=U.shape[0], num_sensors=num_sensors)
     else:
         raise Exception("Invalid heuristic")
     
     return idx
+
+
+
+def random_select(num_features, num_sensors):
+    """
+    Returns randomly selected sensor locations.
+
+    Parameters:
+        num_features (int): Number of features (i.e. dimensions) of a single data sample.
+        num_sensors (int):  The number of sensors to place.
+    Returns:
+        A numpy array of randomly selected sensor locations.
+    """
+
+    return np.random.choice(num_features, size=num_sensors, replace=False)
 
 
 def greedy_sensor_select(heur, U_r, num_sensors, Gamma_prior_sqrt, Gamma_prior_inv,
@@ -204,7 +221,8 @@ def cpqr_select(U: np.ndarray, num_sensors: int, Gamma_prior_sqrt: np.ndarray):
     Selects sensor locations based on the column-pivoted QR (CPQR) algorithm
     proposed in "A New Selection Operator for the Discrete Empirical Interpolation 
     Method" by Zlatko Drmač and Serkan Gugercin (2016).  The number of columns
-    of the basis must be greater than or equal to num_sensors.
+    of the basis must be greater than or equal to num_sensors. We assume that noise
+    is a multiple of the identity, and thus doesn't affect the sensor locations.
 
     Parameters:
         U (ndarray): Matrix whose columns are basis vectors of the data (i.e. POD modes).
@@ -297,6 +315,11 @@ def dopt_greedy_select(U: np.ndarray, sigma_noise: float,
                         Gamma_prior_sqrt: np.ndarray, num_sensors: int):
     """
     Greedily selects D-optimal sensors using Algorithm 1.
+    Note that this implementation can be made more efficient by using rank-1
+    updates as described in Section 4.B of
+    M. Shamaiah, S. Banerjee, H. Vikalo, Greedy sensor selection: Leveraging
+    submodularity, in: 49th IEEE Conference on Decision and Control (CDC),
+    2010, pp. 2572–2577
 
     Parameters:
         U (ndarray): Matrix whose columns are basis vectors of the data.
@@ -333,8 +356,8 @@ def dopt_greedy_select(U: np.ndarray, sigma_noise: float,
     return idx_select_lst
 
 
-def aopt_greedy_select(U: np.ndarray, sigma_noise: float, Gamma_prior_inv: np.ndarray, 
-                        num_sensors: int):
+def aopt_greedy_select(U: np.ndarray, sigma_noise: float, 
+                       Gamma_prior_inv: np.ndarray, num_sensors: int):
     """
     Greedily selects A-optimal sensors using Algorithm 1.
 

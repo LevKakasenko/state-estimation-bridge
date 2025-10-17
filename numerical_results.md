@@ -19,8 +19,42 @@ measurement noise covariance matrices that are a multiple of the identity.
 
 In the *Numerical Results* section of our paper, we discuss the greedy D-optimal and brute-force D-optimal sensor placement algorithms, and refrain from discussing A-optimal and greedy A-optimal sensor placement.  However, the performance of these two approaches can be seen by (1) running *compute_error.py* with the *heur* parameter set to 'aopt', (2) running *compute_error.py* with the *heur* parameter set to 'aopt_greedy', and (3) running *plot_error.py* with the *heuristics* parameter set to ['aopt', 'aopt_greedy'].
 
-## Figure 2
-Run *sensor_locations__Fourier.py* with the following parameter values:  
+## Figures 2 & 10
+Run *singular_vals_plot.py* with the following parameter values:
+| Parameters   | Figure 2 | Figure 10 |
+| ------------ | ------------ | --------------- |
+| data_matrix  | 'fourier'    | 'turbulence'    |
+| num_features | 40 | turbulence().shape[0] |
+| num_samples  | 1000 | turbulence().shape[1] |
+| split_idx    | 750 | 750 |
+| seed         | 0   | 0   |
+
+## Figure 3
+Run *greedy_dopt_histogram.py* with the following parameter values:
+| Parameter         |               |
+| ----------------- | ------------- |
+| data_matrix       | 'fourier'     |     
+| num_features_full | 10**3         |
+| num_features      | 40            |
+| num_samples       | 1000          |
+| split_idx         | 750           |
+| num_modes         | 20            |
+| num_sensors       | 5             |
+| noise             | .1            |
+| sigma_noise       | .1            |
+| f                 | 2             |
+| seed              | 0             |
+
+Printed in the terminal are
+- Whether the sensor locations selected by the Q-MAP and greedy D-optimal algorithms are identical.
+- The lower bounds on the Q-MAP information gain from Eq. (49) (using CPQR and sRRQR).
+- The information gain achieved by the greedy D-optimal algorithm.
+- The minimum and maximum attained information gains over all possible sensor permutations.
+- The lower bound on the greedy D-optimal information gain from Eq. (45).
+- The percentage of all possible sensor permutations that the greedy D-optimal permutation is superior to (in terms of information gain).
+
+## Figure 4
+Run *sensor_locations_Fourier.py* with the following parameter values:  
 
 | Parameter         |               |
 | ----------------- | ------------- |
@@ -37,31 +71,31 @@ Run *sensor_locations__Fourier.py* with the following parameter values:
 | seed              | 0             |
 
 
-## Figure 3
-Run *reconstruction_plot__Fourier.py* with the following parameter values:  
+## Figure 5
+Run *reconstruction_plot_Fourier.py* with the following parameter values:  
 
-| Parameter         |               |
-| ----------------- | ------------- |
-| data_matrix       | 'fourier' |
-| test_idx          | 10 |
-| num_features_full | 10**3 |
-| num_features      | 40 |
-| num_samples       | 1000 |
-| split_idx         | 750 |
-| num_modes         | 20 |
-| num_sensors       | 5 |
-| noise             | .1 |
-| sigma_noise       | .1 |
-| heuristics        | ['dopt', 'dopt_greedy', 'cpqr'] |
-| reconstructors    | ['map', 'map', 'deim'] |
-| seed              | 0 |
+| Parameter         | Panel (a)     | Panel (b)     | Panel (c)     | Panel (d)     |
+| ----------------- | ------------- | ------------- | ------------- | ------------- |
+| data_matrix       | 'fourier'     | 'fourier'     | 'fourier'     | 'fourier'     |
+| test_idx          | 1             | 2             | 3             | 4             |
+| num_features_full | 10**3         | 10**3         | 10**3         | 10**3         |
+| num_features      | 40            | 40            | 40            | 40            |
+| num_samples       | 1000          | 1000          | 1000          | 1000          |
+| split_idx         | 750           | 750           | 750           | 750           |
+| num_modes         | 20            | 20            | 20            | 20            |
+| num_sensors       | 5             | 5             | 5             | 5             |
+| noise             | .1            | .1            | .1            | .1            |
+| sigma_noise       | .1            | .1            | .1            | .1            |
+| heuristics        | ['dopt', 'dopt_greedy', 'cpqr'] | ['dopt', 'dopt_greedy', 'cpqr'] | ['dopt', 'dopt_greedy', 'cpqr'] | ['dopt', 'dopt_greedy', 'cpqr'] |
+| reconstructors    | ['map', 'map', 'deim'] | ['map', 'map', 'deim'] | ['map', 'map', 'deim'] | ['map', 'map', 'deim'] |
+| seed              | 0             | 0             | 0             | 0             |
 
 In addition to plots of the reconstructions of a sample harmonic function, printed in the terminal are the relative
-errors of these reconstructions (1) on this single sample and (2) averaged across all test samples.
+errors of these reconstructions (1) on the single sample (specified by *test_idx*) and (2) averaged across all test samples.
 Also printed in the terminal are the sensor locations as numerical values.
 
-## Figure 4
-To generate each of the plotted quantities (D-MAP, Greedy D-MAP, Q-DEIM) in Figure 4 (whose panel indices are included
+## Figure 6
+To generate each of the plotted quantities (D-MAP, Greedy D-MAP, Q-DEIM) in Figure 6 (whose panel indices are included
 in parentheses in the column headers below), first run *compute_error.py* with the following parameter values:  
 
 | Parameters | D-MAP (a)  | D-MAP (b) | Greedy D-MAP (a/c) | Greedy D-MAP (b) | Greedy D-MAP (d)   | Q-DEIM (c) | Q-DEIM (d) |
@@ -79,7 +113,7 @@ in parentheses in the column headers below), first run *compute_error.py* with t
 | prior        | 'natural' | 'natural' | 'natural'      | 'natural'           | 'natural'          | 'identity' | 'identity' |
 | seed         | 0        | 0         | 0               | 0                   | 0                  | 0          | 0          |
 
-Then, to generate each of the panels in Figure 4, run *plot_error.py* with the following
+Then, to generate each of the panels in Figure 6, run *plot_error.py* with the following
 parameter values:
 
 | Parameters | Panel (a) | Panel (b) | Panel (c) | Panel (d) |
@@ -99,11 +133,13 @@ parameter values:
 | seed            | 0     | 0         | 0         | 0         |
 
 
-## Figures 5 & 9
-To generate Figures 5 and 9 (whose panel indices are included in parentheses in the column headers below),
-run *risk_prem_components_plot.py* with the following parameter values:
+## Figures 7 & 13
+To generate Figures 7 (a), 7 (b), 13 (a), and 13 (b), run (respectively)
+*delta_noise_Fourier_plot.py*, *delta_prior_Fourier_plot.py*,
+*delta_noise_turbulence_plot.py*, and *delta_prior_turbulence_plot.py*
+with the following parameter values:
 
-| Parameters | Figure 5 (a) |  Figure 5 (b) | Figure 9 (a) | Figure 9 (b) |
+| Parameters | Figure 7 (a) |  Figure 7 (b) | Figure 13 (a) | Figure 13 (b) |
 | ---------- | ------------ | ------------- | ------------ | ------------ |
 | data_matrix | 'fourier'   | 'fourier'     | 'turbulence' | 'turbulence' |
 | num_features | 40         | 40            | turbulence().shape[0] |turbulence().shape[0] |
@@ -111,17 +147,34 @@ run *risk_prem_components_plot.py* with the following parameter values:
 | noise        | .1         | .1            | .3           | .3           |
 | sigma_noise  | .1         | .1            | .3           | .3           |
 | split_idx    | 750        | 750           | 750          | 750          |
-| mode_range   | range(1, 21) | range(8, 21) | range(1, 101) | range(50, 101) |
+| mode_range   | range(1, 21) | range(1, 21) | range(1, 101) | range(1, 101) |
 | num_sensors | 5           | 5             | 25           | 25           |
 | prior      | 'natural'    | 'natural'     | 'natural'    | 'natural'    |
 | seed       | 0            | 0             | 0            | 0            |
 
 
-## Figures 6 & 10
-To generate Figures 6 and 10 (whose entries and panel indices are included in the column headers below),
+## Figures 8 & 14
+To generate Figures 8 and 14, run *random_deim_map_plot.py* with the following
+parameter values:
+
+| Parameters   | Figure 8 (a) | Figure 8 (b)  | Figure 14 (a) | Figure 14 (b) |
+| ------------ | ------------ | ------------- | ------------ | ------------- |
+| data_matrix  | 'fourier'    | 'fourier'     | 'turbulence' | 'turbulence' |
+| num_features | 40           | 40            | turbulence().shape[0] | turbulence().shape[0] |
+| num_samples  | 1000         | 1000          | turbulence().shape[1] | turbulence().shape[1] |
+| noise        | .1           | .1            | .3           | .3           |
+| sigma_noise  | .1           | .1            | .3           | .3           |
+| mode_range   | range(1, 21) | range(10, 21) | range(5, 101, 5) | range(50, 101, 5) |
+| num_sensors  | 5            | 5             | 25           | 25            |
+| split_idx    | 750          | 750           | 750          | 750           |
+| seed         | 0            | 0             | 0            | 0             |
+
+
+## Figures 9 & 15
+To generate Figures 9 and 15 (whose entries and panel indices are included in the column headers below),
 first run *compute_error.py* with the following parameter values:
 
-| Parameters | Greedy D-opt. - Figure 6 (a) | Q-MAP - Figure 6 (a) | Greedy D-opt. - Figure 6 (b) | Q-MAP - Figure 6 (b) | Greedy D-opt. - Figure 10 (a) | Q-MAP - Figure 10 (a) | Greedy D-opt. - Figure 10 (b) | Q-MAP - Figure 10 (b) |
+| Parameters | Greedy D-opt. - Figure 9 (a) | Q-MAP - Figure 9 (a) | Greedy D-opt. - Figure 9 (b) | Q-MAP - Figure 9 (b) | Greedy D-opt. - Figure 15 (a) | Q-MAP - Figure 15 (a) | Greedy D-opt. - Figure 15 (b) | Q-MAP - Figure 15 (b) |
 | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
 | data_matrix  | 'fourier'    | 'fourier'    | 'fourier'    | 'fourier'    | 'turbulence' | 'turbulence' | 'turbulence' | 'turbulence' |
 | num_features | 40           | 40           | 40           | 40           | turbulence().shape[0] | turbulence().shape[0] | turbulence().shape[0] | turbulence().shape[0] |
@@ -138,7 +191,7 @@ first run *compute_error.py* with the following parameter values:
 
 
 Then run *dice_plot.py* with the following parameter values:
-| Parameters | Figure 6 (a) | Figure 6 (b) | Figure 10 (a) | Figure 10 (b) |
+| Parameters | Figure 9 (a) | Figure 9 (b) | Figure 15 (a) | Figure 15 (b) |
 | ---------- | ------------ | ------------ | ------------- | ------------- |
 | data_matrix | 'fourier'   | 'fourier'    | 'turbulence'  | 'turbulence'  |
 | num_features | 40         | 40           | turbulence().shape[0] | turbulence().shape[0] |
@@ -155,8 +208,8 @@ Then run *dice_plot.py* with the following parameter values:
 | seed         | 0          | 0            | 0             | 0             |
 
 
-## Figure 7
-To generate each of the reconstructions in Figure 7 (given as column headers below), run 
+## Figure 11
+To generate each of the reconstructions in Figure 11 (given as column headers below), run 
 *compute_error.py* with the following parameter values:
 
 | Parameters   | Greedy D-MAP | Q-DEIM | Q-MAP  |
@@ -174,7 +227,7 @@ To generate each of the reconstructions in Figure 7 (given as column headers bel
 | prior        | 'natural'    | 'identity' | 'natural' |
 | seed         | 0            | 0      | 0      |
 
-Then run *reconstruction_plot__turbulence.py* with the following parameter values:
+Then run *reconstruction_plot_turbulence.py* with the following parameter values:
 
 | Parameters     | |
 | -------------- | ------------ |
@@ -195,8 +248,8 @@ Then run *reconstruction_plot__turbulence.py* with the following parameter value
 
 In addition to plots of the reconstructions of this sample snapshot, printed in the terminal are the relative errors of the reconstructions of this snapshot.
 
-## Figure 8
-To generate each of the plotted quantities (D-MAP, Greedy D-MAP, Q-DEIM) in Figure 8 (whose panel indices are included
+## Figure 12
+To generate each of the plotted quantities (D-MAP, Greedy D-MAP, Q-DEIM) in Figure 12 (whose panel indices are included
 in parentheses in the column headers below), first run *compute_error.py* with the following parameter values:  
 
 | Parameters   | Greedy D-MAP (a/c) | Q-DEIM (a) | Greedy D-MAP (b/d) | Q-DEIM (b) | Q-MAP (c) | Q-MAP (d) |
@@ -214,7 +267,7 @@ in parentheses in the column headers below), first run *compute_error.py* with t
 | prior        | 'natural'  | 'identity'             | 'natural'        | 'identity'      | 'natural' | 'natural' |
 | seed         | 0 | 0 | 0 | 0 | 0 | 0 |
 
-Then, to generate each of the panels in Figure 8, run *plot_error.py* with the following
+Then, to generate each of the panels in Figure 12, run *plot_error.py* with the following
 parameter values:
 
 | Parameters | Panel (a) | Panel (b) | Panel (c) | Panel (d) |
@@ -235,27 +288,13 @@ parameter values:
 
 
 
-# Other Numerical Results (not plotted in the article)
-## Singular value decay
-To observe the singular value decay of our datasets, run *singular_vals_plot.py* with the following
-parameter values:
-
-| Parameters   | Fourier Data | Turbulence Data |
-| ------------ | ------------ | --------------- |
-| data_matrix  | 'fourier'    | 'turbulence'    |
-| num_features | 40 | turbulence().shape[0] |
-| num_samples  | 1000 | turbulence().shape[1] |
-| split_idx    | 750 | 750 |
-| seed         | 0 | 0 |
-
-
+# Other Numerical Results (not plotted in the paper)
 ## Noise percentages
-In our numerical results, we report that measurement noise represents approximately 14.5% of a Fourier test data sample
-and 15% of a turbulence test data sample.  We compute this quantity as the relative error of a noisy 
-data sample with respect to the true data sample, averaged over all test data samples.  To compute these
+In our numerical results, we report that the average relative error of a noisy test data sample with respect to its non-noisy counterpart is approximately 14.5% for the harmonic (i.e. Fourier) data and 15% for the turbulence data.  We compute this quantity as the relative error of a noisy 
+data sample with respect to the true (i.e. non-noisy) data sample, averaged over all test data samples.  To compute these
 quantities, run *noise_error.py* with the following parameter values:
 
-| Parameters   | Fourier Noise Error | Turbulence Noise Error |
+| Parameters   | Harmonic Noise Error | Turbulence Noise Error |
 | ------------ | ------------------- | ------------------- |
 | data_matrix  | 'fourier' | 'turbulence' |
 | num_features | 40 | turbulence().shape[0] |
@@ -283,9 +322,9 @@ training data variance, where *thres* is some threshold between 0 and 1.
 In the case of the turbulence data, also displayed is the total variance 
 explained by the first 100 POD modes.
 
-## Dip in the smallest singular value of S^T Phi
-In Section 5.1.1, we remark that the smallest singular value of S^T Phi dips close to zero 
-precisely when the number of modes equals the number of sensors.  To see this dip, run
+## Drop in the smallest non-zero singular value of S^T Phi
+In Section 5.1.2, we remark that the smallest non-zero singular value of S^T Phi drops close to zero 
+precisely when the number of modes equals the number of sensors.  To see this drop, run
 *smallest_singular_val_plot.py* with the following parameter values:
 
 | Parameters   | Fourier Data | Turbulence Data |

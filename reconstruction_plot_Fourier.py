@@ -21,7 +21,7 @@ from errors import error_rel_columnwise
 
 # Parameters
 data_matrix = 'fourier' # should always be set to 'fourier'
-test_idx = 10 # index of the sample to be reconstructed (i.e. index of a column of the test data matrix)
+test_idx = 4 # index of the sample to be reconstructed (i.e. index of a column of the test data matrix)
 num_features_full = 10**3 # number of points in the dense grid on which the function is evaluated 
                           # (for a smooth plotted curve)
 num_features = 40 # number of rows in the data matrix, each of which is eligible to receive a sensor;
@@ -156,8 +156,8 @@ for i in range(len(heuristics)):
     # compute the reconstruction errors on a single test sample and averaged across all test samples
     error_single_sample = error_rel_columnwise(X_test_single_sample, reconstruction_single_sample)[0]
     error_all_samples = error_rel_columnwise(X_test_all_samples, reconstruction_all_samples)[0]
-    print(label + ' error (single test sample): ' + str(round(error_single_sample,4)))
-    print(label + ' error (all test samples): ' + str(round(error_all_samples,4)))
+    print(label + ' relative error (single test sample): ' + str(round(error_single_sample,4)))
+    print(label + ' relative error (all test samples): ' + str(round(error_all_samples,4)))
     print(label + ' locations: ' + str(angles[idx]))
     print('--------')
     
@@ -168,10 +168,10 @@ for i in range(len(heuristics)):
              color=colors[color_idx])
         
 # finish plotting the results
-plt.xlabel(r'$x$', fontsize=18)
-plt.ylabel(r'$f(x)$', fontsize=18)
-plt.legend(fontsize=14, loc='upper left', bbox_to_anchor=(1, 1))
-plt.tick_params(axis='both', which='major', labelsize=14)
-plt.tick_params(axis='both', which='major', length=5)
+plt.xlabel(r'$x$', fontsize=24)
+plt.ylabel(r'$f(x)$', fontsize=24)
+plt.ylim((-2.5,2.5))
+plt.legend(fontsize=18, loc='upper left', bbox_to_anchor=(1, 1))
+plt.tick_params(axis='both', which='major', labelsize=18, length=5)
 plt.tight_layout()
 plt.show()

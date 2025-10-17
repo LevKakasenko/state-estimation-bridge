@@ -1,7 +1,7 @@
 """
 Author: Lev Kakasenko
 Description:
-Plots the singular value decay of the training data matrix.
+Plots the singular values of the training data.
 
 If you use this code in any form, please cite "Bridging the Gap Between Deterministic and
 Probabilistic Approaches to State Estimation" by Lev Kakasenko,  Alen Alexanderian,
@@ -14,18 +14,19 @@ from data_matrices import fourier, turbulence
 import matplotlib.pyplot as plt
 
 # Parameters
-data_matrix = 'fourier' # Dataset to use, which can be set to:
+data_matrix = 'turbulence' # Dataset to use, which can be set to:
                         #   'fourier' (the Fourier dataset used in Section 5.1)
                         #   'turbulence' (the turbulence dataset used in Section 5.2)
-num_features = 40 # Number of features in a single data sample.
+num_features = turbulence().shape[0] # Number of features in a single data sample.
                   # Each feature corresponds to another grid point on which a function is evaluated.
                   # Set to turbulence().shape[0] for the turbulence data.
-num_samples = 1000 # Number of data samples (i.e. snapshots) for training and testing.
+num_samples = turbulence().shape[1] # Number of data samples (i.e. snapshots) for training and testing.
                    # Set to turbulence().shape[1] for the turbulence data.
 split_idx = 750 # The index at which the data matrix columns are split to generate the train and 
                 # test matrices.  If, for example, this index is set to 750, then the first 750
                 # samples are used for training, and the remaining samples are used for testing.
 seed = 0 # Random seed
+
 
 # set the seed for randomly generated values
 random.seed(seed)
@@ -44,10 +45,14 @@ X_train -= row_means[:, np.newaxis]
 
 s = np.linalg.svd(x, full_matrices=True, compute_uv=False)
 
-plt.figure()
-plt.semilogy(list(range(1,len(s)+1)), s, linewidth=2)
-plt.xlabel('index', fontsize=14)
-plt.ylabel('singular values', fontsize=14)
-plt.title('Singular Values', fontsize=18)
+plt.figure(dpi=200)
+plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams['text.usetex'] = True
+#plt.semilogy(list(range(1,len(s)+1)), s, linewidth=2)
+plt.scatter(list(range(1,len(s)+1)), s, s=5, color='blue', marker='o')
+plt.ylim((1e-1,1e4))
+plt.yscale('log')
+plt.xlabel(r'Index $i$', fontsize=14)
+plt.ylabel(r'$\sigma_i(X_{\textrm{train}})$', fontsize=14)
 plt.grid()
 plt.show()

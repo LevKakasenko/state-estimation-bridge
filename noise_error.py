@@ -1,7 +1,8 @@
 """
 Author: Lev Kakasenko
 Description:
-Computes the average noise-induced relative error in a test data sample.
+Computes the average relative error of a noisy test data sample with
+respect to its non-noisy counterpart.
 
 If you use this code in any form, please cite "Bridging the Gap Between Deterministic and
 Probabilistic Approaches to State Estimation" by Lev Kakasenko,  Alen Alexanderian,
@@ -45,5 +46,5 @@ X_test_obs = add_gaussian_noise(X_test, noise)
 # compute the average noise-induced relative error in the test data
 noise_error, _ = error_rel_columnwise(X_test, X_test_obs)
 
-print('average measurement noise-induced relative error in a test sample: ' 
+print('average relative error in a test sample induced by measurement noise: ' 
       + str(round(noise_error, 4)))

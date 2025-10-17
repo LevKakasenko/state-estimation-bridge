@@ -25,7 +25,7 @@ from errors import error_rel_columnwise
 data_matrix = 'fourier' # Dataset to use, which can be set to:
                         #   'fourier' (the Fourier dataset used in Section 5.1)
                         #   'turbulence' (the turbulence dataset used in Section 5.2)
-num_features = 40  # Number of features in a single data sample.
+num_features = 40  # Number of features (i.e. dimensions) of a single data sample.
                    # Each feature corresponds to another grid point on which a function is evaluated.
                    # Set to turbulence().shape[0] for the turbulence data.
 num_samples = 1000 # Number of data samples (i.e. snapshots) for training and testing.
@@ -40,10 +40,12 @@ sensor_range = range(5, 6) # Range of number of sensors over which to evaluate.
 # Note: For cpqr_fair, if the number of modes (sensors) is varied and sensors (modes) held constant,
 #       then sensor_range (mode_range) is irrelevant.  In the case of cpqr_fair, if mode_range 
 #       (sensor_range) has a length greater than 1, then sensor_range (mode_range) should have a 
-#       length equal to 1.
-heur = 'aopt'
+#       length equal to 1. If sensor_range and mode_range both have a length of 1, then cpqr_fair
+#       sets the number of sensors to mode_range[0].
+heur = 'dopt_greedy'
         # The heur parameter specifies the sensor placement algorithm (i.e. heuristic), and can be set 
         # to any of the following values: 
+        #   'random' (a random set of sensor locations)
         #   'cpqr' (the CPQR algorithm)
         #   'cpqr_fair' (the CPQR algorithm, with the number of modes set equal to the number of sensors)
         #   'dopt' (the brute-force D-optimal algorithm)

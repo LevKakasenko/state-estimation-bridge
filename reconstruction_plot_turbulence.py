@@ -1,7 +1,7 @@
 """
 Author: Lev Kakasenko
 Description:
-Plots the reconstructions of a turbulence snapshot.
+Plots the reconstructions of the vorticity field of a turbulence snapshot.
 
 If you use this code in any form, please cite "Bridging the Gap Between Deterministic and
 Probabilistic Approaches to State Estimation" by Lev Kakasenko,  Alen Alexanderian,
@@ -167,6 +167,8 @@ for heur_name in heur_names:
     if vmax_ > vmax:
         vmax = vmax_
 
+v_abs_max = max(abs(vmin), abs(vmax))
+
 # Create a figure and an AxesGrid for subplots
 rc('font', **{'family': 'serif', 'serif': ['Computer Modern']})
 rc('text', usetex=True)
@@ -177,7 +179,7 @@ grid = ImageGrid(fig, 111, nrows_ncols=(2, 2), axes_pad=0.1,
 
 # Plot the heatmap for X_test
 X_test = X_test.reshape((128,128)) # reshape X_test to its original dimensions
-im = grid[0].imshow(X_test, cmap='jet', vmin=vmin, vmax=vmax)
+im = grid[0].imshow(X_test, cmap='seismic', vmin=-v_abs_max, vmax=v_abs_max)
 grid[0].contour(X_test, colors='black')
 grid[0].get_yaxis().set_ticks([])
 grid[0].get_xaxis().set_ticks([])
@@ -188,7 +190,7 @@ for heur_name in heur_names:
     X_test_hat = reconstruction_dict[heur_name][0]
     error = reconstruction_dict[heur_name][1]
 
-    im = grid[i].imshow(X_test_hat, cmap='jet', vmin=vmin, vmax=vmax)
+    im = grid[i].imshow(X_test_hat, cmap='seismic', vmin=-v_abs_max, vmax=v_abs_max)
     grid[i].contour(X_test_hat, colors='black')
     grid[i].get_yaxis().set_ticks([])
     grid[i].get_xaxis().set_ticks([])

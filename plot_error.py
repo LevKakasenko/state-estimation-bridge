@@ -39,7 +39,7 @@ plot_type = 'error_vs_modes'
 # reconstructor, and prior to be plotted.  For example, if heuristics[0] is 'dopt_greedy', 
 # reconstructors[0] is 'map', and priors[0] is 'natural', then the outputted plot will include
 # the reconstruction error of Greedy D-MAP with our proposed 'natural' prior (from Section 3.1).
-heuristics = ['aopt_greedy', 'aopt']
+heuristics = ['dopt', 'dopt_greedy']
 reconstructors = ['map', 'map']
 priors = ['natural', 'natural']
 seed = 0 # Random seed.
@@ -72,16 +72,16 @@ else:
     raise Exception('Invalid plot_type.')
 
 # Set the plot colors and parameters.
-line_colors = ['green', 'darkgoldenrod', 'blue', 'red', 'purple']
+line_colors = ['darkgoldenrod', 'green', 'blue', 'red', 'purple']
 color_idx = -1
 
 plt.figure(dpi=200)
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams['text.usetex'] = True
-# plt.axvline(x=sensor_range[0], color='black', linestyle='--', 
-#            alpha=.8, linewidth=2) # plot vertical dashed axis
-# plt.text(sensor_range[0], 1.22, f'sensors = {sensor_range[0]}', fontsize=14, 
-#         horizontalalignment='center', color='black')
+#plt.axvline(x=sensor_range[0], color='black', linestyle='--', 
+#           alpha=.8, linewidth=2) # plot vertical dashed axis
+#plt.text(sensor_range[0], 1.21, f'sensors = {sensor_range[0]}', fontsize=14, 
+#        horizontalalignment='center', color='black') # 1.25
 for idx in range(len(heuristics)):
     heur = heuristics[idx]
     prior = priors[idx]
@@ -116,9 +116,6 @@ for idx in range(len(heuristics)):
     # plot results
     heur_name = heur_to_string(heur, reconstructor)
 
-    upper_error = error_mean_lst + error_std_lst
-    lower_error = error_mean_lst - error_std_lst
-
     color_idx = color_idx + 1
     
     if heur_name == 'Q-MAP':
@@ -135,10 +132,13 @@ if plot_type == 'error_vs_modes':
     plt.xlabel('Number of modes', fontsize=14)
 elif plot_type == 'error_vs_sensors':
     plt.xlabel('Number of sensors', fontsize=14)
-    plt.title(f'modes={modes}', style= "italic", fontsize=14)
+    #plt.title(f'modes = {modes}', style= "italic", fontsize=14)
+    #plt.title(f'modes = sensors (for Q-DEIM)\nmodes = {modes} (for Greedy D-MAP)', 
+    #          style= "italic", fontsize=14, multialignment="left")
 
+plt.ylim((.2, 1.2))
 plt.ylabel('Relative error', fontsize=14)
 plt.tick_params(axis='both', which='major', labelsize=14, length=5)
-plt.legend()
+plt.legend(fontsize=14)
 plt.grid()
 plt.show()
