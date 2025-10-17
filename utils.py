@@ -52,10 +52,14 @@ def heur_to_string(heur: str, reconstructor: str) -> str:
         heur = 'D-'
     if heur == 'aopt':
         heur = 'A-'
+    if heur == 'random':
+        heur = 'Random-'
+    
     if reconstructor == 'map':
         reconstructor = 'MAP'
     if reconstructor == 'deim':
         reconstructor = 'DEIM'
+
     return heur + reconstructor
 
 
